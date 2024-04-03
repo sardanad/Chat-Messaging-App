@@ -3,6 +3,7 @@ package com.example.chatmessagingapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -44,7 +45,8 @@ public class SignInActivity extends AppCompatActivity {
             if (validatedSignInDetails()) {
                 signIn();
             }
-    });
+        });
+    }
 
     private void signIn() {
         loading(true);
@@ -68,7 +70,6 @@ public class SignInActivity extends AppCompatActivity {
                         loading(false);
                         showToast("Unable to sign in");
                     }
-                }
                 });
     }
 
@@ -78,7 +79,7 @@ public class SignInActivity extends AppCompatActivity {
             binding.progressBar.setVisibility(View.VISIBLE);
         }else {
             binding.progressBar.setVisibility(View.INVISIBLE);
-            bing.buttonSignIn.setVisibility(View.VISIBLE);
+            binding.buttonSignIn.setVisibility(View.VISIBLE);
         }
     }
 
@@ -92,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()) {
             showToast("Enter valid email");
             return false;
-        } else if (binding.inputPassword.getText().toString.trim().isEmpty()) {
+        } else if (binding.inputPassword.getText().toString().trim().isEmpty()) {
             showToast("Enter password");
             return false;
         } else {
