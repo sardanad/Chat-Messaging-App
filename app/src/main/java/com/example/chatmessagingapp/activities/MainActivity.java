@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.chatmessagingapp.R;
@@ -19,5 +20,11 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setListeners();
+    }
+
+    private void setListeners() {
+        binding.textCreateNewAccount.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
     }
 }
