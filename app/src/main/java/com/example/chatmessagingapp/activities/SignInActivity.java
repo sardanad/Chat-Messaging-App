@@ -14,6 +14,7 @@ import com.example.chatmessagingapp.R;
 import com.example.chatmessagingapp.databinding.ActivitySignInBinding;
 import com.example.chatmessagingapp.utilities.Constants;
 import com.example.chatmessagingapp.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;

@@ -1,5 +1,6 @@
 package com.example.chatmessagingapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,8 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.chatmessagingapp.R;//confirm this import
 import com.example.chatmessagingapp.adapters.UsersAdapter;
 import com.example.chatmessagingapp.databinding.ActivityUsersBinding;
+import com.example.chatmessagingapp.listeners.UserListener;
 import com.example.chatmessagingapp.models.User;
 import com.example.chatmessagingapp.utilities.Constants;
 import com.example.chatmessagingapp.utilities.PreferenceManager;
@@ -20,7 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
@@ -67,7 +70,7 @@ public class UsersActivity extends AppCompatActivity {
                             users.add(user);
                         }
                         if(users.size() > 0) {
-                            UsersAdapter userAdapter = new UsersAdapter(users);
+                            UsersAdapter userAdapter = new UsersAdapter(users, this);
                             binding.usersRecyclerView.setAdapter(userAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         }else {
@@ -90,5 +93,13 @@ public class UsersActivity extends AppCompatActivity {
         }else {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
     }
 }

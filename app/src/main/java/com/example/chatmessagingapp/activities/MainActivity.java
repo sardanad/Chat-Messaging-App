@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setListeners() {
-        binding.textCreateNewAccount.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
+        binding.textName.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));//confirm textName is the ID of TextView meant to be here -> activity_main.xml
         binding.imageSignOut.setOnClickListener(v -> signOut());
         binding.fabNewChat.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
