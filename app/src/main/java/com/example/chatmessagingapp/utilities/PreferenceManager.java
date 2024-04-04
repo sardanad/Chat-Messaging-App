@@ -1,5 +1,6 @@
 package com.example.chatmessagingapp.utilities;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 public class PreferenceManager {
 
@@ -16,7 +17,7 @@ public class PreferenceManager {
     }
 
     public Boolean getBoolean(String key) {
-        return sharedPreferences.getString(key, null);
+        return sharedPreferences.getBoolean(key, false);
     }
 
     public void putString(String key, String value) {
