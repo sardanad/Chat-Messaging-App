@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -11,7 +10,7 @@
     android:scrollbars="none"
     tools:context=".activities.SignUpActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -25,9 +24,8 @@
             android:textColor="@color/main_text"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold" />
-
         <FrameLayout
-            android:id="@+id/layoutImage"
+            android:id = "@+id/layoutImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp">
@@ -41,7 +39,7 @@
                 app:riv_oval="true" />
 
             <TextView
-                android:id="@+id/textAddImage"
+                android:id = "@+id/textAddImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,7 +61,7 @@
             android:inputType="text"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main"
             android:textSize="@dimen/_13ssp" />
 
         <EditText
@@ -78,7 +76,7 @@
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_dark"
             android:textSize="@dimen/_13ssp" />
 
         <EditText
@@ -93,7 +91,7 @@
             android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_dark"
             android:textSize="@dimen/_13ssp" />
 
         <EditText
@@ -108,13 +106,13 @@
             android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_dark"
             android:textSize="@dimen/_13ssp" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:animateLayoutChanges="true">
 
             <com.google.android.material.button.MaterialButton
@@ -126,15 +124,15 @@
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:cornerRadius="@dimen/_8sdp" />
-        
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
-        
+                android:layout_gravity="center"/>
+
         </FrameLayout>
+
 
         <TextView
             android:id="@+id/textSignIn"
@@ -146,6 +144,5 @@
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold" />
 
-    </FrameLayout>
-
+    </LinearLayout>
 </ScrollView>
