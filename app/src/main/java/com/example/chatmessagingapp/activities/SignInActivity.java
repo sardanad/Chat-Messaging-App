@@ -76,7 +76,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void loading(Boolean isLoading) {
         if (isLoading) {
-            binding.buttonSignUp.setVisibility(View.INVISIBLE);
+            binding.buttonSignIn.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         }else {
             binding.progressBar.setVisibility(View.INVISIBLE);
