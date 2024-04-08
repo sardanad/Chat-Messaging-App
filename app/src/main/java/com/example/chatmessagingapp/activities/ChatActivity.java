@@ -275,7 +275,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void checkForConversion() {
-        if (chatMessages.size() == 0) {
+        if (chatMessages.size() != 0) {
             checkForConversionRemotely(
                     preferenceManager.getString(Constants.KEY_USER_ID),
                     receiverUser.id
