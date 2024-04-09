@@ -115,7 +115,8 @@ public class MainActivity extends BaseActivity implements ConversionListener {
                         String senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                         String receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                         if (conversations.get(i).senderId.equals(senderId) && conversations.get(i).receivedId.equals(receiverId)) {
-                            conversations.get(i).message = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
+                            String encryptedMessage = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
+                            conversations.get(i).message = encryptionManager.decryptMessage(encryptedMessage);
                             conversations.get(i).dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
                             break;
                         }
