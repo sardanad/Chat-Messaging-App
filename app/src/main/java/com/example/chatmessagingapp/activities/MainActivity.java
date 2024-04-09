@@ -16,6 +16,7 @@ import com.example.chatmessagingapp.listeners.ConversionListener;
 import com.example.chatmessagingapp.models.ChatMessage;
 import com.example.chatmessagingapp.models.User;
 import com.example.chatmessagingapp.utilities.Constants;
+import com.example.chatmessagingapp.utilities.EncryptionManager;
 import com.example.chatmessagingapp.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements ConversionListener {
 
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
+    private EncryptionManager encryptionManager;
 
     private List<ChatMessage> conversations;
     private RecentConversationsAdapter conversationsAdapter;
@@ -53,6 +55,7 @@ public class MainActivity extends BaseActivity implements ConversionListener {
 
     private void init() {
         conversations = new ArrayList<>();
+        encryptionManager = new EncryptionManager();
         conversationsAdapter = new RecentConversationsAdapter(conversations, this);
         binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
         database = FirebaseFirestore.getInstance();
@@ -103,7 +106,8 @@ public class MainActivity extends BaseActivity implements ConversionListener {
                         chatMessage.conversionName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                         chatMessage.conversionId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     }
-                    chatMessage.message = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
+                    String encryptedMessage = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
+                    chatMessage.message = encryptionManager.decryptMessage(encryptedMessage);
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
                     conversations.add(chatMessage);
                 }else if (documentChange.getType() == DocumentChange.Type.MODIFIED) {
