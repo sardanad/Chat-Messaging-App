@@ -124,7 +124,7 @@ public class ChatActivity extends BaseActivity {
                 body.put(Constants.REMOTE_MSG_DATA, data);
                 body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
 
-                sendNotification(body.toString());
+//                sendNotification(body.toString());
             } catch (Exception exception) {
                 showToast(exception.getMessage());
             }
