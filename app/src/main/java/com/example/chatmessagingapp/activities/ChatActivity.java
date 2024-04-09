@@ -22,6 +22,7 @@ import com.example.chatmessagingapp.models.User;
 import com.example.chatmessagingapp.network.ApiClient;
 import com.example.chatmessagingapp.network.ApiService;
 import com.example.chatmessagingapp.utilities.Constants;
+import com.example.chatmessagingapp.utilities.EncryptionManager;
 import com.example.chatmessagingapp.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
@@ -55,6 +56,7 @@ public class ChatActivity extends BaseActivity {
     private List<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
+    private EncryptionManager encryptionManager;
     private FirebaseFirestore database;
     private String conversionId = null;
     private Boolean isReceiverAvailable = false;
@@ -75,6 +77,7 @@ public class ChatActivity extends BaseActivity {
     private void init() {
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
+        encryptionManager = new EncryptionManager();
         chatAdapter = new ChatAdapter(
                 chatMessages,
                 getBitmapFromEncodedString(receiverUser.image),
@@ -86,13 +89,14 @@ public class ChatActivity extends BaseActivity {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
+        String encryptedMessage = encryptionManager.encryptMessage(binding.inputMessage.getText().toString());
         message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+        message.put(Constants.KEY_MESSAGE, encryptedMessage);
         message.put(Constants.KEY_TIMESTAMP, new Date());
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
         if (conversionId != null) {
-            updateConversion(binding.inputMessage.getText().toString());
+            updateConversion(encryptedMessage);
         } else {
             HashMap<String, Object> conversion = new HashMap<>();
             conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
@@ -101,7 +105,7 @@ public class ChatActivity extends BaseActivity {
             conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
             conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
             conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
-            conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
+            conversion.put(Constants.KEY_LAST_MESSAGE, encryptedMessage);
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
             addConversion(conversion);
         }
@@ -216,7 +220,8 @@ public class ChatActivity extends BaseActivity {
                     ChatMessage chatMessage = new ChatMessage();
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.receivedId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
-                    chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
+                    String encryptedMessage = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
+                    chatMessage.message = encryptionManager.decryptMessage(encryptedMessage);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
                     chatMessages.add(chatMessage);
